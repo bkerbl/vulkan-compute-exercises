@@ -1,0 +1,30 @@
+#version 450
+
+// TODO: Define the resource. This time, tell GLSL that it is a buffer
+// (not uniform) that contains an integer array of undefined sizes (int data[]).
+
+layout(local_size_x = 32, local_size_y = 1, local_size_z = 1) in;
+void main()
+{
+	// TODO: Find out the global thread ID in .x dimension for the thread.
+	// Then, compute the corresponding Fibonacci number. I.e., thread n 
+	// should compute the nth Fibonacci number, and write it to position n 
+	// into the storage buffer's array.
+	// There actually is a closed-form solution for Fibonacci numbers, so you 
+	// can compute each of them in constant time:
+	// https://en.wikipedia.org/wiki/Fibonacci_number#Closed-form_expression
+	//
+	// Pay attention to a few things:
+	// - The computations in the link require using floating point numbers
+	// - GLSL provides built-in functions for operations like sqrt and pow
+	// - The pow(x, n) function is undefined for negative x. But, because we
+	//   know that n is always an integer, we can work around it like this:
+	//
+	//   float result = pow(abs(x), n);
+	//   if (n % 2 == 1)
+	//		result = -result;
+	//
+	// - The final result should be an integer. Convert types in GLSL like so:
+	//   float foo = 5.0;
+	//   int bar = int(foo);    <-- is now 5
+}

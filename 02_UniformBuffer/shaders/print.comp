@@ -1,0 +1,29 @@
+#version 450
+
+#extension GL_EXT_debug_printf : require
+
+// TODO: Define the resource. A minimal resource description looks like this:
+//
+// layout(set = <?> , binding = <?> ) <usage> <struct name>
+// {
+//	  <contents>
+// } <resource name>
+//
+// Start with the layout:  We used descriptor set 0, and bound the buffer to
+// its binding index which you defined (probably also 0). Next, the usage is
+// uniform. For the struct name, you can specify whatever you want, e.g., 
+// MessageBuffer. The contents are three integers, e.g., int x, y, z;
+// Finally, give your resource a name so you can use it contents in the shader.
+// If you give your buffer the name foo, you can access its contained integer
+// x via foo.x, y via foo.y, etc.
+
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+void main()
+{
+	int sum = 0;
+	
+	// TODO: Read the 3 integers form your uniform buffer and
+	// add them together into the variable "sum".
+
+	debugPrintfEXT("Good job, now you deserve a %x!\n", sum);
+}

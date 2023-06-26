@@ -1,0 +1,10 @@
+#version 450
+
+// TODO: Activate the required extension GL_EXT_debug_printf
+
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+void main()
+{
+	// TODO: Print a message, with debugPrintfEXT, using 
+	// gl_GlobalInvocationID.x to identify different threads doing the work.
+}

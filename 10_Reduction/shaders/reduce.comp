@@ -1,0 +1,11 @@
+#version 450
+
+// TODO: List all necessary resources and implement reduction of the
+// input array in a shader. Make sure your implementation is as fast
+// as it can be. Using only global or shared memory atomics will not
+// suffice to get full points in this task!
+
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+void main()
+{
+}

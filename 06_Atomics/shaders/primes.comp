@@ -1,0 +1,29 @@
+#version 450
+
+layout (set = 0, binding = 0) buffer Counter
+{
+	uint value;
+} count;
+
+layout (set = 0, binding = 1) buffer OutputBuffer
+{
+	uint data[];
+} primes;
+
+// TODO: Implement any primality test you like that outputs
+// for a given integer whether or not it is prime. 
+// https://en.wikipedia.org/wiki/Primality_test
+bool isPrime(uint n)
+{
+    return true;
+}
+
+layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
+void main()
+{
+    // TODO: Each thread should test if its index n is prime.
+    // If it is, it should atomically increment the number of detected
+    // prime numbers. Use the return value of the atomic operation
+    // as the location for writing the number n into the output array.
+    // If the number is not prime, do not write anything. 
+}

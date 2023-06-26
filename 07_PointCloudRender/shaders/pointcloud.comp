@@ -1,0 +1,74 @@
+#version 450
+
+layout (std140, set = 0, binding = 0) uniform Params
+{
+    uint resolution[2];
+	uint numPoints;
+	mat4 mvp;
+} params;
+
+struct Point
+{
+	vec3 position;
+	vec3 color;
+};
+
+layout (std430, set = 0, binding = 1) buffer PointCloud
+{
+	Point data[];
+} pointcloud;
+
+layout (std430, set = 0, binding = 2) buffer Image
+{
+	uint data[];
+} image;
+
+// Compresses a vec3 with colors in range [0, 1] to 16-color RGB
+uint compress16(vec3 rgb)
+{
+	uint result;
+	rgb = clamp(rgb, 0, 1);
+	result = uint(rgb.r * 15.0f);
+	result |= uint(rgb.g * 15.0f) << 4;
+	result |= uint(rgb.b * 15.0f) << 8;
+	return result;
+}
+
+layout(local_size_x = 128, local_size_y = 1, local_size_z = 1) in;
+void main()
+{
+	// Implement a simple point cloud renderer with atomics, using one thread per point.
+	// To do this, we have to make sure that only the closest points remain visible in 
+	// every pixel. We will use atomicMin for this.
+	//
+	// TODO: Find the id of the current thread. We have started some number of threads. 
+	// Maybe more than there are points? Redundant threads should not try to load points 
+	// because we don't have data for them. Best terminate them here.
+	// 
+	// TODO: Fetch the .position of this thread's point from the pointcloud buffer.
+	// Turn it into a vec4 (fourth coordinate should be 1) and project it onto the 
+	// screen by multiplying it (from the left) with the matrix .mvp from the render 
+	// params struct. The result is a vec4, divide it by its .w coordinate. Now, its 
+	// x and y coordinates are in range (-1, 1). The z coordinate is in range (0, 1).
+	// This is called "normalized device coordinates" (or NDC). But we need to know
+	// which pixels to update and we will only use 20 bits for the depth. So, convert 
+	// the coordinates to uints in the range [0, params.width) for x, [0, params.height) 
+	// for y and [0, 2^24) for z. I.e., the coordinate (-1, -1, 0) should become (0, 0, 0).
+	// The coordinate (1, 1, 1) should become (width-1, height-1, 2^20 - 1).
+	//
+	// TODO: Fetch the .color of this thread's point from the pointcloud buffer. Compress 
+	// it into a uint using the compress16 function. Now, take the z coordinate (depth) 
+	// you computed before, shift it by 12 bits (<<) and add it onto the color. Now you 
+	// have a single 32bit value where the highest 20 bits are depth and the lower 12 bits 
+	// encode RGB color: [<----depth (20)----><-RGB (12)->]. Note that if we would sort
+	// multiple of these values, the lowest one is also the one with the lowest depth.
+	//
+	// TODO: Traverse a 3x3 window around the current point's pixel. The image has been
+	// initalized with all bits set (UINT_MAX) at each pixel. At each pixel, perform 
+	// an atomicMin with the 32bit value (combined depth and color) you computed on the
+	// image data buffer. If done correctly, the color of the closest point should end up 
+	// in each output pixel when the shader is done.
+	uint id = gl_GlobalInvocationID.x;
+	if(id > params.numPoints)
+		return;
+}

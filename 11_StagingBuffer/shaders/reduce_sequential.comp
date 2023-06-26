@@ -1,0 +1,26 @@
+#version 450
+
+#extension GL_EXT_debug_printf : require
+
+layout (std140, set = 0, binding = 0) uniform InfoBuff
+{
+    int numNumbers;
+} info;
+
+layout (std430, set = 0, binding = 1) buffer InputBuff
+{
+    float data[];
+} incoming;
+
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+void main()
+{
+    float result = 0.0f;
+
+    // We are only sampling the buffer, it is very large...
+    for (int i = 0; i < info.numNumbers; i += 1000)
+        result += incoming.data[i];
+
+    // Extrapolate result
+    debugPrintfEXT("Extrapolated GPU Result: %f\n", result * 1000);
+}

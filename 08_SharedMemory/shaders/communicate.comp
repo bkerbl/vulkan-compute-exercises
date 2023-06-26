@@ -1,0 +1,26 @@
+#version 450
+
+#extension GL_EXT_debug_printf : require
+
+// TODO: Declare a shared array large enough to hold 32 integeres
+
+layout(local_size_x = 32, local_size_y = 1, local_size_z = 1) in;
+void main()
+{
+	// TODO: Let each thread n compute the n-th Fibonacci number
+	// (you already have code for this now). Then, let each thread
+	// store his computed number in the shared array at position n.
+	// 
+	// TODO: Add a barrier. Before you can use the data, you must
+	// ensure that the consuming threads wait until the writers
+	// have finished execution and the memory is visible. Within
+	// a block, both of these things are realized by a barrier(),
+	// which makes all previous accesses visible to everyone else
+	// in the group (and only in the group).
+	// 
+	// TODO: To produce a nicely organized output, thread 0 should
+	// print all computed Fibonacci numbers, in order, by reading 
+	// them from shared memory. Note how this thread is now using
+	// data that other threads have computed! This is a very powerful
+	// concept for GPU programming. 
+}
