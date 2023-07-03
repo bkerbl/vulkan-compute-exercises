@@ -28,8 +28,8 @@ int main()
 		Framework::setupComputePipeline("fibonacci.comp.spv", descLayouts, *device, shaderModule, layout, cache, pipeline);
 
 		// TODO: We will want a resource to put in our descriptor set. A single storage buffer is needed.
-		// The buffer should have enough room to store 64 integers. The memory we use for the buffer 
-		// should device-local, but also be visible to the host and coherent so we can write to it 
+		// The buffer should have enough room to store 32 integers. The memory we use for the buffer 
+		// should device-local, but also be visible to the host and host-coherent so we can write to it 
 		// from the CPU. Once the buffer is created, you will have to (in addition):
 		// 1) Get the buffer's memory requirements (a struct)
 		// 2) Find a memory type that fulfills the requirements (you can use the code below)
@@ -99,7 +99,7 @@ int main()
 
 /*
 ==================================== Task 3 ====================================
-1) Create a descriptor set layout with a single uniform buffer in main.cpp.
+1) Create a descriptor set layout with a single storage buffer in main.cpp.
 2) Create a storage buffer and memory to hold the GPU-produced data.
 3) Create and fill a descriptor set for your pipeline in main.cpp.
 4) Bind your descriptor set before dispatching the compute job in main.cpp.

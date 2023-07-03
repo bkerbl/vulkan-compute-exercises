@@ -20,6 +20,6 @@ print them out.
 4) Make sure to clean up everything! Either by explicitly destroying your objects 
 (in the right order) or by using the smart pointers of vulkan.hpp.
 5) Optional: you can go and explore a bit, checking out the individual features
-or your devices and queue families it provides. What kinds does it support? 
-Check out an advanced feature using the pnext pointer of VkPhysicalDeviceFeatures2.
+of your devices and queue families it provides. What kinds does it support? 
+Check out an advanced feature using the pNext pointer of VkPhysicalDeviceFeatures2.
 */

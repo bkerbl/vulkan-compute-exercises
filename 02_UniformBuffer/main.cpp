@@ -37,7 +37,7 @@ int main()
 
 		// TODO: We will want a resource to put in our descriptor set. A single uniform buffer is needed.
 		// The buffer should have enough room to store 3 integers. The memory we use for the buffer 
-		// should device-local, but also be visible to the host and coherent so we can write to it 
+		// should be device-local, but also be visible to the host and host-coherent so we can write to it 
 		// from the CPU. Once the buffer is created, you will have to (in addition):
 		// 1) Get the buffer's memory requirements (a struct)
 		// 2) Find a memory type that fulfills the requirements (you can use the code below)
@@ -68,14 +68,14 @@ int main()
 		// TODO: Allocate a single unique descriptor set from your descriptor pool, with the 
 		// descriptor set layout you defined above.
 		//
-		// TODO: Connect the buffer to your descriptor set. First, prepare a descriptor 
+		// TODO: Enter the buffer into your descriptor set. First, prepare a descriptor 
 		// buffer info that describes which buffer will be used, and how. Select your 
 		// buffer from above, with no offset, and using its full size (VK_WHOLE_SIZE).
 		//
 		// TODO: Prepare a WriteDescriptorSet struct that specifies what entries
 		// should be overwritten in which descriptor set. You want to update your 
 		// descriptor set from above. You want to update the binding index you chose
-		// above. It is not an array of buffers, so just set array element to 0. 
+		// above. We don't have an array of buffers, so just set array element to 0. 
 		// The descriptor type is a uniform buffer. We are not updating image infos,
 		// so leave those empty. We are updating descriptor buffer infos, so use 
 		// the one you just prepared.
@@ -90,7 +90,7 @@ int main()
 		cmdBuffers[0]->bindPipeline(vk::PipelineBindPoint::eCompute, *pipeline);
 
 		// TODO: Bind your descriptor set before dispatching a compute job that needs it.
-		// It should be bound to the compute pipeline bind point. Use your pipeline's layout.
+		// It should be bound to the "compute" pipeline bind point. Use your pipeline's layout.
 		// You can define an offset for the set IDs, but best leave it at 0. Bind the first
 		// (and only) entry from your vector of descriptor sets. We don't use dynamic offsets.
 

@@ -13,7 +13,7 @@ int main()
 		vk::UniqueCommandPool commandPool;
 		vk::Queue queue;
 
-		Framework::setupBasicCompute("Task 2", VK_API_VERSION_1_3, {}, {}, instance, physicalDevice, device, queue, commandPool);
+		Framework::setupBasicCompute("Task 4", VK_API_VERSION_1_3, {}, {}, instance, physicalDevice, device, queue, commandPool);
 		
 		size_t sizeA = sizeof(int) * 60, sizeX = sizeof(int) * 20;
 		auto bufferUsage = VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
