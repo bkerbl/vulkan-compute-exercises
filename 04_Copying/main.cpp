@@ -28,7 +28,10 @@ int main()
 		// all others should be sizeX. All buffers should have usage "bufferUsage" (all of them should be 
 		// able to be copied from and copied to. Each buffer also needs a separate allocation (read: memory). 
 		// Buffer A's allocation should have required flags "propsA" (reachable from host, device-local), all 
-		// others should have the required flags "propsX" (device-local).
+		// others should have the required flags "propsX" (device-local). Note: you can easily convert vk::
+		// structs to standard Vk structs, simply by assignment. E.g., you can do:
+		// VkBufferCreateInfo info = vk::BufferCreateInfo({}, ... ), 
+		// which lets you benefit from vulkan.hpp's sensible default constructor parameters. Isn't that neat?
 		VkBuffer bufferA, bufferB, bufferC, bufferD;
 
 		// The content of this array will be copied across our different buffers
@@ -38,7 +41,7 @@ int main()
 			89, 144, 233, 377, 22, 44, 10101, 30, 0, 0, 7, 7, 12, 144, 2568, 1, 303, 0, 2, 377
 		};
 
-		// TODO: Map the entire host-visible buffer A and write all 60 magic numbers there
+		// TODO: Map the entire host-visible memory of buffer A and write all 60 magic numbers there
 		int* mappedA;
 
 		// Create our basic command buffer
@@ -96,8 +99,8 @@ int main()
 		for (int i = 0; i < 20; i++)
 			std::cout << mappedA[i] << " ";
 
-		// TODO: Don't forget to clean up the VMA when you are done. This includes destroying
-		// all buffers and eventually the VMA itself. 
+		// TODO: Don't forget to clean up the VMA when you are done. This includes unmapping
+		// all still mapped memory, destroying all buffers and eventually the allocator itself. 
 	}
 	catch (Framework::NotImplemented e)
 	{
