@@ -20,7 +20,8 @@ int main()
 		auto propsA = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 		auto propsX = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 		
-		// Let's use the VMA from here on out...
+		// TODO: Let's use the VMA from here on out... to this end, go ahead and implement
+		// createAllocator in framework.cpp.
 		VmaAllocator allocator = Framework::createAllocator(*instance, VK_API_VERSION_1_3, physicalDevice, *device);
 
 		// TODO: Create four buffers using the Vulkan memory allocator. Buffer A should be of size sizeA;
