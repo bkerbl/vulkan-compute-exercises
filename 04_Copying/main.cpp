@@ -26,8 +26,9 @@ int main()
 
 		// TODO: Create four buffers using the Vulkan memory allocator. Buffer A should be of size sizeA;
 		// all others should be sizeX. All buffers should have usage "bufferUsage" (all of them should be 
-		// able to be copied from and copied to. Buffer A should have required flags "propsA" (reachable 
-		// from host), all others should have "propsX" (device-local).
+		// able to be copied from and copied to. Each buffer also needs a separate allocation (read: memory). 
+		// Buffer A's allocation should have required flags "propsA" (reachable from host, device-local), all 
+		// others should have the required flags "propsX" (device-local).
 		VkBuffer bufferA, bufferB, bufferC, bufferD;
 
 		// The content of this array will be copied across our different buffers
