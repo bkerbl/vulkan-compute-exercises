@@ -71,8 +71,6 @@ int main()
 		// available to the CPU safely. Enforce a memory barrier that makes shader writes (source) 
 		// available to host reads (destination). The corresponding pipeline barrier should 
 		// synchronize the computer shader stage with the host stage.
-		vk::MemoryBarrier memoryBarrier(vk::AccessFlagBits::eShaderWrite, vk::AccessFlagBits::eHostRead);
-		cmdBuffers[0]->pipelineBarrier(vk::PipelineStageFlagBits::eComputeShader, vk::PipelineStageFlagBits::eHost, {}, memoryBarrier, {}, {});
 
 		cmdBuffers[0]->end();
 
